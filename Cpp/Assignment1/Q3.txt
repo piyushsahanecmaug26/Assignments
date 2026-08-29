@@ -1,0 +1,87 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+int main(int argc, char *argv[])
+{
+    // Check number of arguments
+    if (argc != 4)
+    {
+        cout << "Usage : ./sensor_monitor <warn_threshold> "
+             << "<critical_threshold> <num_readings>" << endl;
+
+        cout << "Error : Missing arguments." << endl;
+
+        return 1;
+    }
+
+    // Convert command-line arguments to integers
+    int warn = atoi(argv[1]);
+    int critical = atoi(argv[2]);
+    int num_readings = atoi(argv[3]);
+
+    // Validate thresholds
+    if (warn >= critical)
+    {
+        cout << "Error : Warning threshold must be less than "
+             << "critical threshold." << endl;
+
+        return 1;
+    }
+
+    // Validate number of readings
+    if (num_readings < 1 || num_readings > 500)
+    {
+        cout << "Error : Number of readings must be between 1 and 500."
+             << endl;
+
+        return 1;
+    }
+
+    // Seed random number generator
+    srand(time(0));
+
+    // Counters
+    int normal = 0;
+    int warning = 0;
+    int critical_count = 0;
+    int shutdown = 0;
+
+    // Generate and classify readings
+    for (int i = 0; i < num_readings; i++)
+    {
+        int reading = rand() % 70;
+
+        if (reading < warn)
+        {
+            normal++;
+        }
+        else if (reading < critical)
+        {
+            warning++;
+        }
+        else if (reading < 60)
+        {
+            critical_count++;
+        }
+        else
+        {
+            shutdown++;
+        }
+    }
+
+    // Print configuration
+    cout << "Config : Warn=" << warn << "°C  "
+         << "Critical=" << critical << "°C  "
+         << "Readings=" << num_readings << endl;
+
+    // Print results
+    cout << "Results : Normal:" << normal
+         << "  Warning:" << warning
+         << "  Critical:" << critical_count
+         << "  Shutdown:" << shutdown << endl;
+
+    return 0;
+}
