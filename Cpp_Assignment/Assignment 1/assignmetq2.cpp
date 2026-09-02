@@ -1,0 +1,68 @@
+//============================================================================
+// Name        : assignmetq2.cpp
+// Author      : 
+// Version     :
+// Copyright   : Your copyright notice
+// Description : Hello World in C++, Ansi-style
+//============================================================================
+
+#include <iostream>
+using namespace std;
+
+int main() {
+	int N,i,sum;
+	int skipped = 0 ;
+	double arrsum = 0.0;
+
+
+	cout<<"Enter the no of reading to take"<<endl;
+	cin>>N;
+	double arr[N];
+	cout<<"Enter the reading"<<endl;
+		for(i=0;i<N;i++){
+			cin>>arr[i];
+		}
+//for output
+	cout<<"Reading entered  : " << N << endl;
+	cout<<"Valid readings   : ";
+		for(i=0;i<N;i++){
+			if(arr[i]<0){ skipped++ ;continue;}
+			else{cout<<arr[i]<<" ";}
+		}
+		cout<<endl;
+		cout<<"Skipped (errors) : "<<skipped << endl;
+
+		for(i=0;i<N;i++){
+			if(arr[i]>=45){
+				cout<<"First critical    : Index "<< i <<" -> "<<arr[i]<<"C"<<endl;break;};
+			}
+
+		double min =arr[0];
+		double max =arr[0];
+
+		for(i=0;i<N;i++){
+			if(arr[i]<=0){;continue;}
+			else{
+				if(arr[i]>max){max=arr[i];}
+				if(arr[i]<min){min=arr[i];}
+				arrsum=arrsum+arr[i];
+			}
+		}
+		double arravg = arrsum/(N-skipped);
+		cout<<"Min : "<<min<<"   Max : "<<max<<"   Avg : "<<arravg<<endl;
+		//arrsum=arrsum+arr[i];
+
+		int nor=0;
+		int war=0;
+		int cri=0;
+		int shut=0;
+
+		for(i=0;i<N;i++){
+			if(arr[i]>=0 && arr[i]<30){nor++;}
+			else if(arr[i]<45){war++;}
+			else if(arr[i]<60){cri++;}
+			else{shut++;}
+		}
+		cout<<"Normal:"<<nor << "  Warning:"<<war <<"  Critical:"<< cri <<"  Shutdown:"<<shut<<endl;
+
+}
